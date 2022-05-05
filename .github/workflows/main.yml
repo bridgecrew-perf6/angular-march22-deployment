@@ -1,22 +1,24 @@
-name: CI Setup
-on: push
+name: CI
+
+on:
+  push:
+    branches:
+      - 'master'
+
 jobs:
   build:
+    name: Build and Test
     runs-on: ubuntu-latest
     steps:
-      ‐ uses: actions/checkout@v2
-      ‐ name: Use Node.js 14.x
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Use Node 12.x
         uses: actions/setup-node@v1
         with:
-          node-version: 14.x
-
-      ‐ name: Setup
+          node-version: '12.x'
+      - name: Install dependencies
         run: npm ci
-      
-      ‐ name: Lint
-        run: |
-          npm run lint
-
-      ‐ name: Test
-        run: |
-          npm run test:ci
+      - name: Lint
+        run: npm run lint
+      - name: Test
+        run: npm run test:ci
